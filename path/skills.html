@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skills</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(30deg, #182C51, #09101e);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            background-color: #070b13;
+            z-index: 1;
+        }
+
+        .nav-left {
+            font-size: 30px;
+            font-weight: bold;
+            color: #fff; 
+            text-decoration: none;
+            z-index: 1;
+        }
+
+        .nav-right {
+            display: flex; 
+            gap: 40px; 
+            z-index: 1;
+        }
+
+        .nav-right a {
+            cursor: pointer;
+            text-decoration: none;
+            color: #fff; 
+            font-size: 23px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .nav-right a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 0;
+            height: 3px;
+            background-color: #007BFF;
+            transition: width 0.3s ease;
+            z-index: 1;
+        }
+
+        .nav-right a:hover {
+            color: #007BFF;
+            z-index: 1;
+        }
+
+        .nav-right a:hover::after {
+            width: 100%;
+            z-index: 1;
+        }
+
+        .logo {
+            display: none;
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .home-center {
+            width: 100%;
+            margin-bottom: 100px;
+            z-index: 1;
+        }
+
+        .home-center {
+            width: 100%;
+            margin-bottom: 100px;
+            overflow-y: auto; 
+            z-index: 1;
+        }
+
+        @media (min-width: 600px) { 
+            .nav-right {
+                display: flex;
+            }
+
+            .home-center {
+                height: calc(95vh - 65px); 
+            }
+            
+        }
+
+        @media (min-height: 500px) {
+            .home-center {
+                height: calc(95vh - 65px); 
+            }
+        }
+
+        @media (max-width: 600px) { 
+            .logo {
+                display: block;
+            }
+
+            .skills-list {
+                overflow: auto;
+            }
+
+            .nav-right {
+                display: none;
+                flex-direction: column;
+                background-color: #070b13;
+                padding: 20px;
+                position: absolute;
+                top: 70px;
+                right: 0;
+                width: 250px;
+                box-shadow: -2px 0px 5px rgba(0, 0, 0, 0.3);
+                z-index: 10;
+            }
+
+            .nav-right.active {
+                display: flex;
+            }
+
+            .nav-right a {
+                padding: 10px 0;
+            }
+        }
+
+
+        .home-center {
+            display: flex;
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            color: #fff;
+            text-align: center; 
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .home-text {
+            font-size: 36px;
+            font-weight: bold;
+            z-index: 1;
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            z-index: 1;
+            overflow-y:initial;
+        }
+
+        .skill {
+            cursor: pointer;
+            background-color: #1a1a1d;
+            padding: 20px;
+            border-radius: 10px;
+            color: #fff;
+            width: 150px;
+            text-align: center;
+            transition: box-shadow 0.3s ease;
+            overflow: auto;
+        }
+
+        .skill:hover {
+            box-shadow: 0 0 10px #f9f3f2, 0 0 80px 8px;
+            z-index: 9999;
+        }
+
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: transparent;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            width: 3px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0.8;
+            }
+            50% {
+                opacity: 0.3;
+            }
+        }
+
+        .star:nth-child(odd) {
+            animation-duration: 3s;
+        }
+
+        .star:nth-child(even) {
+            animation-duration: 4s;
+        }
+
+        .skill-info {
+            display: none;
+            background-color: #1a1a1d;
+            padding: 20px;
+            border-radius: 10px;
+            color: #fff;
+            width: 300px;
+            height: 200px;
+            text-align: center;
+            box-shadow: 0 0 10px #f9f3f2, 0 0 80px 8px;
+            position: relative;
+            margin-top: 20px;
+            transition: transform 0.5s ease;
+            z-index: 1;
+        }
+
+        .skill-info.show {
+            display: block;
+            transform: scale(1.2);
+        }
+
+        .back-btn {
+            background-color: #007BFF;
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: #fff;
+            text-decoration: none;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        .back-btn:hover {
+            background-color: #0056b3;
+        }
+
+        @-webkit-keyframes snowflakes-fall {
+		0% {
+			top: -10%
+		}
+		100% {
+			top: 100%
+		}
+        }
+        
+        @-webkit-keyframes snowflakes-shake {
+            0%,
+            100% {
+                -webkit-transform: translateX(0);
+                transform: translateX(0)
+            }
+            50% {
+                -webkit-transform: translateX(80px);
+                transform: translateX(80px)
+            }
+        }
+        
+        @keyframes snowflakes-fall {
+            0% {
+                top: -10%
+            }
+            100% {
+                top: 100%
+            }
+        }
+        
+        @keyframes snowflakes-shake {
+            0%,
+            100% {
+                transform: translateX(0)
+            }
+            50% {
+                transform: translateX(80px)
+            }
+        }
+        
+        .snowflake {
+            position: fixed;
+            top: -10%;
+            z-index: 0;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-animation-name: snowflakes-fall, snowflakes-shake;
+            -webkit-animation-duration: 10s, 3s;
+            -webkit-animation-timing-function: linear, ease-in-out;
+            -webkit-animation-iteration-count: infinite, infinite;
+            -webkit-animation-play-state: running, running;
+            animation-name: snowflakes-fall, snowflakes-shake;
+            animation-duration: 10s, 3s;
+            animation-timing-function: linear, ease-in-out;
+            animation-iteration-count: infinite, infinite;
+            animation-play-state: running, running;
+            opacity: 0.3;
+        }
+        
+        .snowflake:nth-of-type(0) {
+            left: 1%;
+            -webkit-animation-delay: 0s, 0s;
+            animation-delay: 0s, 0s
+        }
+        
+        .snowflake:nth-of-type(1) {
+            left: 10%;
+            -webkit-animation-delay: 1s, 1s;
+            animation-delay: 1s, 1s;
+        }
+        
+        .snowflake:nth-of-type(2) {
+            left: 20%;
+            -webkit-animation-delay: 6s, .5s;
+            animation-delay: 6s, .5s;
+        }
+        
+        .snowflake:nth-of-type(3) {
+            left: 30%;
+            -webkit-animation-delay: 4s, 2s;
+            animation-delay: 4s, 2s;
+        }
+        
+        .snowflake:nth-of-type(4) {
+            left: 40%;
+            -webkit-animation-delay: 2s, 2s;
+            animation-delay: 2s, 2s;
+        }
+        
+        .snowflake:nth-of-type(5) {
+            left: 50%;
+            -webkit-animation-delay: 8s, 3s;
+            animation-delay: 8s, 3s;
+        }
+        
+        .snowflake:nth-of-type(6) {
+            left: 60%;
+            -webkit-animation-delay: 6s, 2s;
+            animation-delay: 6s, 2s;
+        }
+        
+        .snowflake:nth-of-type(7) {
+            left: 70%;
+            -webkit-animation-delay: 2.5s, 1s;
+            animation-delay: 2.5s, 1s;
+        }
+        
+        .snowflake:nth-of-type(8) {
+            left: 80%;
+            -webkit-animation-delay: 1s, 0s;
+            animation-delay: 1s, 0s;
+        }
+        
+        .snowflake:nth-of-type(9) {
+            left: 90%;
+            -webkit-animation-delay: 3s, 1.5s;
+            animation-delay: 3s, 1.5s;
+        }
+        
+        .snowflake:nth-of-type(10) {
+            left: 100%;
+            -webkit-animation-delay: 2s, 0s;
+            animation-delay: 2s, 0s;
+        }
+        
+        .snowflake:nth-of-type(11) {
+            left: 65%;
+            -webkit-animation-delay: 4s, 2.5s;
+            animation-delay: 4s, 2.5s;
+        }
+
+        @keyframes homeTextFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-600px); 
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0px); 
+            }
+        }
+
+        /* Home Text Animation */
+        .home-text {
+            font-size: auto;
+            font-weight: bold;
+            position: relative;
+            animation: homeTextFadeIn 3s ease-out; 
+        }
+
+        @keyframes skillTextFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(600px); 
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0px); 
+            }
+        }
+
+        /* Home Text Animation */
+        .skills-list {
+            font-size: auto;
+            font-weight: bold;
+            position: relative;
+            animation: skillTextFadeIn 3s ease-out; 
+        }
+
+        .skill-info.no-animation {
+            animation: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a class="nav-left" href="">Nicko A. Trivino</a>
+
+        <img class="logo" src="../images/logo.png" alt="Logo" id="logo">
+
+        <div class="nav-right">
+            <a href="../index.html">Home</a>
+            <a href="skills.html">Skills</a>
+            <a href="projects.html">Projects</a>
+            <a href="sdg.html">SDG</a>
+            <a href="contact.html">Contacts</a>
+        </div>
+    </nav>
+
+    <div class="home-center">
+        <h1 class="home-text">My <span style="color: #4db411;">Skills and Expertise</span></h1>
+
+        <div class="stars">
+            <div class="star" style="top: 10%; left: 15%;"></div>
+            <div class="star" style="top: 20%; left: 50%;"></div>
+            <div class="star" style="top: 30%; left: 80%;"></div>
+            <div class="star" style="top: 40%; left: 25%;"></div>
+            <div class="star" style="top: 50%; left: 70%;"></div>
+            <div class="star" style="top: 60%; left: 10%;"></div>
+            <div class="star" style="top: 70%; left: 90%;"></div>
+            <div class="star" style="top: 80%; left: 40%;"></div>
+        </div>
+
+        <div class="skills-list" id="skills-list">
+            <div class="skill" onclick="showSkillInfo('Python')">Python</div>
+            <div class="skill" onclick="showSkillInfo('Arduino-Uno')">Arduino-Uno</div>
+            <div class="skill" onclick="showSkillInfo('Kali')">Kali</div>
+            <div class="skill" onclick="showSkillInfo('HTML')">HTML / CSS</div>
+            <div class="skill" onclick="showSkillInfo('Typescript')">Typescript</div>
+            <div class="skill" onclick="showSkillInfo('JavaScript')">JavaScript</div>
+        </div>
+
+        <div class="skill-info" id="skill-info">
+            <h2 id="skill-title">Skill Title</h2>
+            <p id="skill-description">Description of the skill.</p>
+            <a href="javascript:void(0);" class="back-btn" onclick="goBack()">Back</a>
+        </div>
+    </div>
+
+    <div class="snowflakes">
+        <div class="snowflake"><img src="../images/motherboard.png" style="width:50px;" /></div>
+        <div class="snowflake"><img src="../images/html.png" style="width:50px;" /></div>
+          <div class="snowflake"><img src="../images/linux.png" style="width:50px;" /></div>
+          <div class="snowflake"><img src="../images/python.png" style="width:50px;" /></div>
+         <div class="snowflake"><img src="../images/typescript.png" style="width:50px;" /></div>
+        <div class="snowflake"><img src="../images/css-3.png" style="width:50px;" /></div>
+        <div class="snowflake"><img src="../images/html.png" style="width:50px;" /></div>
+        <div class="snowflake"><img src="../images/motherboard.png" style="width:50px;" /></div>
+          <div class="snowflake"><img src="../images/linux.png" style="width:50px;" /></div>
+         <div class="snowflake"><img src="../images/typescript.png" style="width:50px;" /></div>
+         <div class="snowflake"><img src="../images/python.png" style="width:50px;" /></div>
+        <div class="snowflake"><img src="../images/css-3.png" style="width:50px;" /></div>
+      </div>
+      </div>
+
+    <script>
+        const skillDescriptions = {
+            'Python': 'Creations: Sequence Query Languages, Application, and Artificial Intelligence.',
+            'Arduino-Uno': 'Created: Artificial Intelligence.',
+            'Kali': 'Ethically Tested: Nmap, Netcat, and Metasploit',
+            'HTML': 'Created: Webpages',
+            'Typescript': 'Created: Discord Presence and Metadata',
+            'JavaScript': 'Created: Dynamic and interactive web pages.'
+        };
+
+        function showSkillInfo(skill) {
+            const skillsList = document.getElementById('skills-list');
+            skillsList.style.visibility = 'hidden';
+            skillsList.style.position = 'absolute';
+
+            const skillInfo = document.getElementById('skill-info');
+            const skillTitle = document.getElementById('skill-title');
+            const skillDescription = document.getElementById('skill-description');
+            
+            skillTitle.textContent = skill;
+            skillDescription.textContent = skillDescriptions[skill] || 'No description available for this skill.';
+            
+            skillInfo.classList.add('show');
+        }
+
+        function goBack() {
+            const skillInfo = document.getElementById('skill-info');
+            const skillsList = document.getElementById('skills-list');
+
+            skillInfo.classList.remove('show');
+            skillsList.style.display = 'flex';
+            skillsList.style.visibility = 'visible';
+            skillsList.style.position = 'relative';
+        }
+
+        const logo = document.getElementById('logo');
+        const navRight = document.querySelector('.nav-right');
+
+        logo.addEventListener('click', function() {
+            navRight.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

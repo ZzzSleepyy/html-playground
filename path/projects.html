@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(30deg, #182C51, #09101e);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            background-color: #070b13;
+            z-index: 1;
+        }
+
+        .nav-left {
+            font-size: 30px;
+            font-weight: bold;
+            color: #fff; 
+            text-decoration: none;
+            z-index: 1;
+        }
+
+        .nav-right {
+            display: flex; 
+            gap: 40px; 
+            z-index: 1;
+        }
+
+        .nav-right a {
+            cursor: pointer;
+            text-decoration: none;
+            color: #fff; 
+            font-size: 23px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .nav-right a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 0;
+            height: 3px;
+            background-color: #007BFF;
+            transition: width 0.3s ease;
+            z-index: 1;
+        }
+
+        .nav-right a:hover {
+            color: #007BFF;
+            z-index: 1;
+        }
+
+        .nav-right a:hover::after {
+            width: 100%;
+            z-index: 1;
+        }
+
+        .logo {
+            display: none;
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .home-center {
+            display: flex;
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            height: calc(95vh - 65px); 
+            color: #fff;
+            text-align: center; 
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .home-text {
+            font-size: 36px;
+            font-weight: bold;
+            z-index: 1;
+            animation: homeTextFadeIn 3s ease-out;
+        }
+
+        @keyframes homeTextFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-600px); 
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0px); 
+            }
+        }
+
+
+        
+
+        @media (min-width: 600px) { 
+            .nav-right {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 600px) { 
+            .logo {
+                display: block;
+            }
+
+            @media (max-width: 600px) {
+            .project {
+                width: 100%;   /* Makes the project box take full width on small screens */
+                height: 200px; /* Smaller height for mobile */
+                font-size: 20px; /* Smaller font size */
+            }
+
+            .home-center {
+                overflow: auto;
+            }
+        }
+
+
+            .nav-right {
+                display: none;
+                flex-direction: column;
+                background-color: #070b13;
+                padding: 20px;
+                position: absolute;
+                top: 70px;
+                right: 0;
+                width: 250px;
+                box-shadow: -2px 0px 5px rgba(0, 0, 0, 0.3);
+                z-index: 10;
+            }
+
+            .nav-right.active {
+                display: flex;
+            }
+
+            .nav-right a {
+                padding: 10px 0;
+            }
+        }
+
+        .project-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            width: 100%; 
+            max-width: 100%; 
+            animation: projectTextFadeIn 3s ease-in-out;
+            box-sizing: border-box; 
+        }
+        
+        @keyframes projectTextFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(700px); 
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0px); 
+            }
+        }
+
+        .project {
+            background-color: #1a1a1d;
+            padding: 20px;
+            font-size: 30px;
+            border: 4px solid transparent;
+            border-radius: 10px;
+            color: #fff;
+            width: 600px;  
+            height: 400px;
+            text-align: center;
+            position: relative;
+            margin: 10px;
+            z-index: 1;
+            background-clip: padding-box;
+            transition: box-shadow 0.3s ease-in-out;
+            box-sizing: border-box; 
+        }
+
+        .project::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 10px;
+            border: 4px solid;
+            border-image-source: linear-gradient(45deg, #ff0000, #00ff00, #0000ff, #ff00ff);
+            border-image-slice: 1;
+            background-clip: border-box;
+            animation: neon-border 3s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes neon-border {
+            0% {
+                border-image-source: linear-gradient(45deg, #ff0000, #00ff00, #0000ff, #ff00ff);
+            }
+            50% {
+                border-image-source: linear-gradient(135deg, #00ff00, #0000ff, #ff00ff, #ff0000);
+            }
+            100% {
+                border-image-source: linear-gradient(45deg, #ff0000, #00ff00, #0000ff, #ff00ff);
+            }
+        }
+
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: transparent;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            width: 3px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0.8;
+            }
+            50% {
+                opacity: 0.3;
+            }
+        }
+
+        .star:nth-child(odd) {
+            animation-duration: 3s;
+        }
+
+        .star:nth-child(even) {
+            animation-duration: 4s;
+        }
+
+        .back-btn {
+            background-color: #007BFF;
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: #fff;
+            text-decoration: none;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        .back-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .button-class {
+            cursor: pointer;
+            font-size: 20px;
+            padding: 10px;
+            background: #007BFF;
+            color: #fff;
+            border: 0px;
+        }  
+        
+        .button-class:hover {
+            background: #0000ff;
+        }
+
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a class="nav-left" href="">Nicko A. Trivino</a>
+
+        <img class="logo" src="../images/logo.png" alt="Logo" id="logo">
+
+        <div class="nav-right">
+            <a href="../index.html">Home</a>
+            <a href="skills.html">Skills</a>
+            <a href="projects.html">Projects</a>
+            <a href="sdg.html">SDG</a>
+            <a href="contact.html">Contacts</a>
+        </div>
+    </nav>
+
+    <div class="home-center">
+        <h1 class="home-text">My <span style="color: #4db411;">Projects</span></h1>
+
+        <div class="stars">
+            <div class="star" style="top: 10%; left: 15%;"></div>
+            <div class="star" style="top: 20%; left: 50%;"></div>
+            <div class="star" style="top: 30%; left: 80%;"></div>
+            <div class="star" style="top: 40%; left: 25%;"></div>
+            <div class="star" style="top: 50%; left: 70%;"></div>
+            <div class="star" style="top: 60%; left: 10%;"></div>
+            <div class="star" style="top: 70%; left: 90%;"></div>
+            <div class="star" style="top: 80%; left: 40%;"></div>
+        </div>
+
+        <div class="project-list" id="project-list">
+            <div class="project" id="project-box1">
+                <p id="project-title">Automated Waste Segregator EdgeImpuse</p>
+            </div>
+            <button onclick="nextProject()" class="button-class">></button>
+        </div>
+    </div>
+
+    <script>
+        let currentProject = 0;
+        const projects = [
+            {
+                title: 'ESP32-S and Arduino-Uno EdgeImpuse Waste Segregator',
+                imageUrl: '../images/project1.jfif',
+            },
+            {
+                title: 'Presence Development: Lazada',
+                imageUrl: '../images/project2.png',  
+            },
+            {
+                title: 'Bot Development: RPS',
+                imageUrl: '../images/project3.png',  
+            },
+        ];
+
+        window.onload = () => {
+            const projectBox = document.getElementById('project-box1');
+            const project = projects[currentProject];
+            projectBox.querySelector('p').textContent = project.title;
+            projectBox.style.backgroundImage = `url(${project.imageUrl})`;
+            projectBox.style.backgroundSize = 'contain'; 
+            projectBox.style.backgroundPosition = 'center'; 
+            projectBox.style.backgroundRepeat = 'no-repeat'; 
+        };
+
+        function nextProject() {
+            currentProject = (currentProject + 1) % projects.length;
+            const projectBox = document.getElementById('project-box1');
+            const project = projects[currentProject];
+
+            projectBox.querySelector('p').textContent = project.title;
+            projectBox.style.backgroundImage = `url(${project.imageUrl})`;
+            projectBox.style.backgroundSize = 'contain';  
+            projectBox.style.backgroundPosition = 'center'; 
+            projectBox.style.backgroundRepeat = 'no-repeat'; 
+        }
+
+        const logo = document.getElementById('logo');
+        const navRight = document.querySelector('.nav-right');
+
+        logo.addEventListener('click', function() {
+            navRight.classList.toggle('active');
+        });
+
+    </script>
+
+</body>
+</html>
